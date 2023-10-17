@@ -38,6 +38,23 @@
                 </font>
             </Label>
             <CheckBox fx:id="isBotFirst" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        <Label text="Bot Algorithm (O): " GridPane.rowIndex="2">
+            <font>
+               <Font name="Arial Bold" size="12" />
+            </font>
+         </Label>
+         <ComboBox fx:id="botAlgorithm" maxWidth="Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="23.0" />
+            <RowConstraints maxHeight="34.0" minHeight="30.0" prefHeight="32.0" />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
     </top>
 

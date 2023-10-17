@@ -62,7 +62,7 @@ public class InputFrameBotVsBotController {
 
             // Get controller of output frame and pass input including player names and number of rounds chosen.
             OutputFrameController outputFC = loader.getController();
-            outputFC.getInput(this.player1.getText(), this.player2.getText(), this.numberOfRounds.getValue(), this.isBotFirst.isSelected(), false);
+            outputFC.getInput(this.player1.getText(), this.player2.getText(), this.numberOfRounds.getValue(), this.isBotFirst.isSelected(), this.bot1_algo.getValue(), this.bot2_algo.getValue(),false);
 
             // Open the new frame.
             Stage secondaryStage = new Stage();

@@ -52,8 +52,7 @@ public class OutputFrameController {
     private boolean isBotFirst;
     private boolean isVsHuman;
     private Bot bot;
-    private BotMinimax botMinimax;
-    private BotHillClimb botHillClimb;
+    private Bot bot1;
 
     private static final int ROW = 8;
     private static final int COL = 8;
@@ -71,7 +70,7 @@ public class OutputFrameController {
      * @param isBotFirst True if bot is first, false otherwise.
      *
      */
-    void getInput(String name1, String name2, String rounds, boolean isBotFirst, boolean isVsHuman){
+    void getInput(String name1, String name2, String rounds, boolean isBotFirst, String algorithm, boolean isVsHuman){
         this.playerXName.setText(name1);
         this.playerOName.setText(name2);
         this.roundsLeftLabel.setText(rounds);
@@ -79,7 +78,46 @@ public class OutputFrameController {
         this.isBotFirst = isBotFirst;
         this.isVsHuman = isVsHuman;
         // Start bot
-        this.bot = new Bot();
+        if(algorithm=="Hill Climbing"){
+            this.bot = new BotHillClimb();
+        }
+        else if (algorithm == "Minimax"){
+            this.bot = new BotMinimax();
+        } else {
+            this.bot = new Bot();
+        }
+        this.playerXTurn = !isBotFirst;
+        if (this.isBotFirst) {
+            this.moveBot();
+        }
+    }
+
+    void getInput(String name1, String name2, String rounds, boolean isBotFirst, String algorithm1, String algorithm2, boolean isVsHuman){
+        this.playerXName.setText(name1);
+        this.playerOName.setText(name2);
+        this.roundsLeftLabel.setText(rounds);
+        this.roundsLeft = Integer.parseInt(rounds);
+        this.isBotFirst = isBotFirst;
+        this.isVsHuman = isVsHuman;
+        // Start bot
+        if(algorithm1=="Hill Climbing"){
+            this.bot = new BotHillClimb();
+        }
+        else if (algorithm1 == "Minimax"){
+            this.bot = new BotMinimax();
+        } else {
+            this.bot = new Bot();
+        }
+
+        if(algorithm2=="Hill Climbing"){
+            this.bot1 = new BotHillClimb();
+        }
+        else if (algorithm2 == "Minimax"){
+            this.bot1 = new BotMinimax();
+        } else {
+            this.bot1 = new Bot();
+        }
+
         this.playerXTurn = !isBotFirst;
         if (this.isBotFirst) {
             this.moveBot();
@@ -368,6 +406,38 @@ public class OutputFrameController {
         }
 //        int[] botMove = this.bot.move(buttons);
         int[] botMove = this.bot.move();
+        int i = botMove[0];
+        int j = botMove[1];
+
+//        System.out.println();
+//        while (!this.buttons[i][j].getText().equals("")) {
+//            // new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
+//            // System.exit(1);
+//            // return;
+//            botMove = this.bot.move();
+//            i = botMove[0];
+//            j = botMove[1];
+//        }
+
+        this.selectedCoordinates(i, j);
+    }
+
+    private void moveBot1(){
+        for (int i = 0 ; i < 8 ; i++)
+        {
+            for (int j = 0 ; j < 8 ; j++)
+            {
+                if (buttons[i][j].getText().equals(""))
+                {
+                    System.out.print("_ ");
+                } else {
+                    System.out.print(buttons[i][j].getText() + " ");
+                }
+            }
+            System.out.println();
+        }
+//        int[] botMove = this.bot.move(buttons);
+        int[] botMove = this.bot1.move();
         int i = botMove[0];
         int j = botMove[1];
 
