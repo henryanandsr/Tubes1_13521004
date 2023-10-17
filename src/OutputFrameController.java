@@ -247,6 +247,13 @@ public class OutputFrameController {
                 }
 
                 // Bot's turn
+                if (!isVsHuman) {
+                    try {
+                        java.util.concurrent.TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 this.moveBot1();
             }
             else {
@@ -267,6 +274,11 @@ public class OutputFrameController {
                     this.endOfGame();       // Determine & announce the winner.
                 }
                 if (!this.isVsHuman && this.roundsLeft>0){
+                    try {
+                        java.util.concurrent.TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     this.moveBot();
                 }
             }
@@ -392,9 +404,11 @@ public class OutputFrameController {
         // Close secondary stage/output frame.
         Stage secondaryStage = (Stage) this.gameBoard.getScene().getWindow();
         secondaryStage.close();
-
-        // Reopen primary stage/input frame.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InputFrame.fxml"));
+        // Reopen primary stage/input frame.
+        if (!isVsHuman){
+            loader = new FXMLLoader(getClass().getResource("InputFrameBotVsBot.fxml"));
+        }
         Parent root = loader.load();
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Adjacency Gameplay");
