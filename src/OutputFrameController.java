@@ -100,7 +100,7 @@ public class OutputFrameController {
         this.isBotFirst = isBotFirst;
         this.isVsHuman = isVsHuman;
         // Start bot
-        if(algorithm1=="Hill Climbing"){
+        if(algorithm1=="Local Search"){
             this.bot = new BotHillClimb();
         }
         else if (algorithm1 == "Minimax"){
@@ -109,7 +109,7 @@ public class OutputFrameController {
             this.bot = new Bot();
         }
 
-        if(algorithm2=="Hill Climbing"){
+        if(algorithm2=="Local Search"){
             this.bot1 = new BotHillClimb();
         }
         else if (algorithm2 == "Minimax"){
@@ -121,6 +121,8 @@ public class OutputFrameController {
         this.playerXTurn = !isBotFirst;
         if (this.isBotFirst) {
             this.moveBot();
+        } else if (!this.isBotFirst && !this.isVsHuman){
+            this.moveBot1();
         }
     }
 
@@ -255,6 +257,9 @@ public class OutputFrameController {
 
                 if (!isBotFirst && this.roundsLeft == 0) { // Game has terminated.
                     this.endOfGame();       // Determine & announce the winner.
+                }
+                if (!this.isVsHuman){
+                    this.moveBot1();
                 }
             }
         }
@@ -419,6 +424,7 @@ public class OutputFrameController {
 //            j = botMove[1];
 //        }
 
+        System.out.println("bot1" + i + ", " + j);
         this.selectedCoordinates(i, j);
     }
 
@@ -450,7 +456,7 @@ public class OutputFrameController {
 //            i = botMove[0];
 //            j = botMove[1];
 //        }
-
+        System.out.println("bot2" + i + ", " + j);
         this.selectedCoordinates(i, j);
     }
 }
