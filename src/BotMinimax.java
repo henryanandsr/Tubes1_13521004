@@ -8,6 +8,7 @@ public class BotMinimax extends Bot{
      * @param buttons matrix of buttons representing the board
      * @return best coordinate to move to
      */
+    @Override
     public int[] move(Button[][] buttons) {
         int c = 0;
         int max = Integer.MIN_VALUE;

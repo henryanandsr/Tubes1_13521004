@@ -6,7 +6,7 @@ public class BotHillClimb extends Bot{
      * @param buttons matrix of buttons representing the board
      * @return best coordinate to move to
      */
-
+    @Override
     public int[] move(Button[][] buttons) {
         BoardState bs = new BoardState(buttons);
         return hillclimb(bs);

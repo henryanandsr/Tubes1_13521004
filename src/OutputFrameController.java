@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -79,16 +80,16 @@ public class OutputFrameController {
         this.isVsHuman = isVsHuman;
         // Start bot
         if(algorithm=="Hill Climbing"){
-            this.bot = new BotHillClimb();
+            this.bot1 = new BotHillClimb();
         }
         else if (algorithm == "Minimax"){
-            this.bot = new BotMinimax();
+            this.bot1 = new BotMinimax();
         } else {
-            this.bot = new Bot();
+//            this.bot = new Bot();
         }
         this.playerXTurn = !isBotFirst;
         if (this.isBotFirst) {
-            this.moveBot();
+            this.moveBot1();
         }
     }
 
@@ -102,11 +103,12 @@ public class OutputFrameController {
         // Start bot
         if(algorithm1=="Local Search"){
             this.bot = new BotHillClimb();
+//            this.bot = new RandomBot();
         }
         else if (algorithm1 == "Minimax"){
             this.bot = new BotMinimax();
         } else {
-            this.bot = new Bot();
+//            this.bot = new Bot();
         }
 
         if(algorithm2=="Local Search"){
@@ -115,17 +117,19 @@ public class OutputFrameController {
         else if (algorithm2 == "Minimax"){
             this.bot1 = new BotMinimax();
         } else {
-            this.bot1 = new Bot();
+//            this.bot1 = new Bot();
         }
 
         this.playerXTurn = !isBotFirst;
+    }
+    public void start()
+    {
         if (this.isBotFirst) {
-            this.moveBot();
-        } else if (!this.isBotFirst && !this.isVsHuman){
             this.moveBot1();
+        } else if (!this.isBotFirst && !this.isVsHuman){
+            this.moveBot();
         }
     }
-
 
 
     /**
@@ -160,9 +164,11 @@ public class OutputFrameController {
 
                 // Add ActionListener to each button such that when it is clicked, it calls
                 // the selected coordinates method with its i and j coordinates.
+//                if (isVsHuman){
                 final int finalI = i;
                 final int finalJ = j;
                 this.buttons[i][j].setOnAction(event -> this.selectedCoordinates(finalI, finalJ));
+//                }
             }
         }
 
@@ -201,6 +207,7 @@ public class OutputFrameController {
         this.playerXTurn = true;
         this.playerXScore = 4;
         this.playerOScore = 4;
+        System.out.println("INITTT");
     }
 
 
@@ -219,6 +226,7 @@ public class OutputFrameController {
         // Button must be blank.
         else {
             if (this.playerXTurn) {
+                System.out.println("ROUND" + roundsLeft);
                 // Changed background color to green to indicate next player's turn.
                 this.playerXBoxPane.setStyle("-fx-background-color: WHITE; -fx-border-color: #D3D3D3;");
                 this.playerOBoxPane.setStyle("-fx-background-color: #90EE90; -fx-border-color: #D3D3D3;");
@@ -239,7 +247,7 @@ public class OutputFrameController {
                 }
 
                 // Bot's turn
-                this.moveBot();
+                this.moveBot1();
             }
             else {
                 this.playerXBoxPane.setStyle("-fx-background-color: #90EE90; -fx-border-color: #D3D3D3;");
@@ -258,8 +266,8 @@ public class OutputFrameController {
                 if (!isBotFirst && this.roundsLeft == 0) { // Game has terminated.
                     this.endOfGame();       // Determine & announce the winner.
                 }
-                if (!this.isVsHuman){
-                    this.moveBot1();
+                if (!this.isVsHuman && this.roundsLeft>0){
+                    this.moveBot();
                 }
             }
         }
@@ -410,22 +418,20 @@ public class OutputFrameController {
             System.out.println();
         }
 //        int[] botMove = this.bot.move(buttons);
-        int[] botMove = this.bot.move();
+        int[] botMove = this.bot1.move(buttons);
         int i = botMove[0];
         int j = botMove[1];
 
-//        System.out.println();
-//        while (!this.buttons[i][j].getText().equals("")) {
-//            // new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
-//            // System.exit(1);
-//            // return;
-//            botMove = this.bot.move();
-//            i = botMove[0];
-//            j = botMove[1];
-//        }
+        while (!this.buttons[i][j].getText().equals("")) {
+             new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
+             System.exit(1);
+             return;
+        }
 
         System.out.println("bot1" + i + ", " + j);
-        this.selectedCoordinates(i, j);
+        Platform.runLater(() -> {
+            this.selectedCoordinates(i, j);
+        });
     }
 
     private void moveBot1(){
@@ -442,21 +448,19 @@ public class OutputFrameController {
             }
             System.out.println();
         }
-//        int[] botMove = this.bot.move(buttons);
-        int[] botMove = this.bot1.move();
+//        int[] botMove = this.bot1.move(buttons);
+        int[] botMove = this.bot1.move(buttons);
         int i = botMove[0];
         int j = botMove[1];
 
-//        System.out.println();
-//        while (!this.buttons[i][j].getText().equals("")) {
-//            // new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
-//            // System.exit(1);
-//            // return;
-//            botMove = this.bot.move();
-//            i = botMove[0];
-//            j = botMove[1];
-//        }
+        while (!this.buttons[i][j].getText().equals("")) {
+             new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
+             System.exit(1);
+             return;
+        }
         System.out.println("bot2" + i + ", " + j);
-        this.selectedCoordinates(i, j);
+        Platform.runLater(() -> {
+            this.selectedCoordinates(i, j);
+        });
     }
 }

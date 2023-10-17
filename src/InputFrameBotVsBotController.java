@@ -70,6 +70,7 @@ public class InputFrameBotVsBotController {
             secondaryStage.setScene(new Scene(root));
             secondaryStage.setResizable(true);
             secondaryStage.show();
+            outputFC.start();
         }
     }
     /**

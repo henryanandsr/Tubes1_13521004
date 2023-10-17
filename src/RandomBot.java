@@ -2,7 +2,7 @@ import javafx.scene.control.Button;
 import javafx.util.Pair;
 import java.util.HashSet;
 
-public abstract class Bot {
+public class RandomBot extends Bot{
     /***
      * Move with random decision
      * @return decided coordinate
@@ -11,5 +11,9 @@ public abstract class Bot {
         // create random move
         return new int[]{(int) (Math.random() * 8), (int) (Math.random() * 8)};
     }
-    public abstract int[] move(Button[][] buttons);
+
+    @Override
+    public int[] move(Button[][] buttons) {
+        return new int[0];
+    }
 }
