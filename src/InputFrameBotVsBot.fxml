@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="InputFrameBotVsBotController">
+    <padding><Insets top="5" bottom="5" left="5" right="5"/></padding>
+    <top>
+        <GridPane>
+            <!-- BOT X NAME -->
+            <Label text="Bot Name (X): " GridPane.rowIndex="0" GridPane.columnIndex="0">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <TextField fx:id="player1" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <!-- COMBOBOX ALGORITHM -->
+            <Label text="Select Algorithm for Bot 1: " GridPane.rowIndex="0" GridPane.columnIndex="2">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <ComboBox fx:id="bot1_algo" GridPane.rowIndex="0" GridPane.columnIndex="3" maxWidth="Infinity" />
+
+            <!-- BOT O NAME -->
+            <Label text="Bot Name (O): " GridPane.rowIndex="1" GridPane.columnIndex="0">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <TextField fx:id="player2" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <!-- COMBOBOX ALGORITHM FOR BOT 2 -->
+            <Label text="Select Algorithm for Bot 2: " GridPane.rowIndex="1" GridPane.columnIndex="2">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <ComboBox fx:id="bot2_algo" GridPane.rowIndex="1" GridPane.columnIndex="3" maxWidth="Infinity" />
+
+            <!-- NUMBER OF ROUNDS LABEL -->
+            <Label text="Number of Rounds to be played: " GridPane.rowIndex="2" GridPane.columnIndex="0">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+
+            <!-- COMBOBOX NUMBER OF ROUNDS -->
+            <ComboBox fx:id="numberOfRounds" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity" />
+
+            <!-- BOT 2 GOES FIRST CHECKBOX -->
+            <Label text="Bot 2 goes first?" GridPane.rowIndex="3" GridPane.columnIndex="0">
+                <font>
+                    <Font name="Arial Bold" size="12"/>
+                </font>
+            </Label>
+            <CheckBox fx:id="isBotFirst" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        </GridPane>
+    </top>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="5"><padding><Insets top="5"/></padding>
+            <VBox>
+                <Button text="Reset" onAction="#reset">
+                    <padding><Insets top="5" bottom="5" left="10" right="10"/></padding>
+                    <font>
+                        <Font name="Arial Bold" size="12"/>
+                    </font>
+                </Button>
+            </VBox>
+            <VBox>
+                <Button text="Play" onAction="#play">
+                    <padding><Insets top="5" bottom="5" left="10" right="10"/></padding>
+                    <font>
+                        <Font name="Arial Bold" size="12"/>
+                    </font>
+                </Button>
+            </VBox>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -7,8 +7,6 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-
-
 public class InitializationController {
     @FXML
     private ComboBox<String> options;
@@ -26,6 +24,24 @@ public class InitializationController {
         if ("Bot vs Human".equals(selectedOption)) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("InputFrame.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Input Frame");
+                stage.setScene(new Scene(root));
+
+                // Show the InputFrame.fxml
+                stage.show();
+
+                // Close the current stage (if needed)
+                Stage currentStage = (Stage) options.getScene().getWindow();
+                currentStage.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("InputFrameBotVsBot.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.setTitle("Input Frame");

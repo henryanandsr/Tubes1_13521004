@@ -50,10 +50,10 @@ public class OutputFrameController {
     private int playerOScore;
     private int roundsLeft;
     private boolean isBotFirst;
+    private boolean isVsHuman;
     private Bot bot;
     private BotMinimax botMinimax;
     private BotHillClimb botHillClimb;
-
 
     private static final int ROW = 8;
     private static final int COL = 8;
@@ -71,13 +71,13 @@ public class OutputFrameController {
      * @param isBotFirst True if bot is first, false otherwise.
      *
      */
-    void getInput(String name1, String name2, String rounds, boolean isBotFirst){
+    void getInput(String name1, String name2, String rounds, boolean isBotFirst, boolean isVsHuman){
         this.playerXName.setText(name1);
         this.playerOName.setText(name2);
         this.roundsLeftLabel.setText(rounds);
         this.roundsLeft = Integer.parseInt(rounds);
         this.isBotFirst = isBotFirst;
-
+        this.isVsHuman = isVsHuman;
         // Start bot
         this.bot = new Bot();
         this.playerXTurn = !isBotFirst;
