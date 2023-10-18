@@ -1,13 +1,15 @@
 import javafx.scene.control.Button;
 
 public class BotHillClimb extends Bot{
+    private int playerNumber;
     /***
      * Move with local search hill climbing algorithm
      * @param buttons matrix of buttons representing the board
      * @return best coordinate to move to
      */
     @Override
-    public int[] move(Button[][] buttons) {
+    public int[] move(Button[][] buttons, int pNumber) {
+        this.playerNumber = pNumber;
         BoardState bs = new BoardState(buttons);
         return hillclimb(bs);
     }
@@ -17,16 +19,21 @@ public class BotHillClimb extends Bot{
      * @return BoardState local maximum for O
      */
     public int[] hillclimb(BoardState input) {
-        int[] Pos = {-1, -1}; //index 0 and 1 is position values, index 2 is value of quantification
+        int[] Pos = {-1, -1};
         int Val = Integer.MIN_VALUE;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (input.Positions[i][j] == '_'){
-                    BoardState itr = new BoardState(input, i, j, 'O');
-                    if (itr.evaluateBoard() > Val) {
+                    BoardState itr;
+                    if (this.playerNumber == 1) {
+                        itr = new BoardState(input, i, j, 'X');
+                    } else {
+                        itr = new BoardState(input, i, j, 'O');
+                    }
+                    if (itr.evaluateBoard(playerNumber) > Val) {
                         Pos[0] = i;
                         Pos[1] = j;
-                        Val = itr.evaluateBoard();
+                        Val = itr.evaluateBoard(playerNumber);
                     }
                 }
             }

@@ -11,16 +11,25 @@ public class BoardState {
             {'_','_','_','_','_','_','_','_'},
             {'_','_','_','_','_','_','_','_'},
             {'_','_','_','_','_','_','_','_'}};
-    public int evaluateBoard() {
+    public int evaluateBoard(int pNumber) {
         int sum = 0;
         for (char[] row :
                 Positions) {
             for (char mark :
                     row) {
-                if (mark == 'O') {
-                    sum++;
-                } else if (mark == 'X') {
-                    sum--;
+                if (pNumber==1){
+                    if (mark == 'O') {
+                        sum--;
+                    } else if (mark == 'X') {
+                        sum++;
+                    }
+                }
+                else{
+                    if (mark == 'O') {
+                        sum++;
+                    } else if (mark == 'X') {
+                        sum--;
+                    }
                 }
             }
         }

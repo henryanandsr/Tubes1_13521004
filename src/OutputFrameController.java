@@ -1,3 +1,4 @@
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -52,7 +54,7 @@ public class OutputFrameController {
     private int roundsLeft;
     private boolean isBotFirst;
     private boolean isVsHuman;
-    private Bot bot;
+    private Bot bot2;
     private Bot bot1;
 
     private static final int ROW = 8;
@@ -102,22 +104,26 @@ public class OutputFrameController {
         this.isVsHuman = isVsHuman;
         // Start bot
         if(algorithm1=="Local Search"){
-            this.bot = new BotHillClimb();
+            this.bot2 = new BotHillClimb();
+//            System.out.println("LOCAL");
 //            this.bot = new RandomBot();
         }
         else if (algorithm1 == "Minimax"){
-            this.bot = new BotMinimax();
-        } else {
-//            this.bot = new Bot();
+            this.bot2 = new BotMinimax();
+//            System.out.println("MINIMAX");
+        } else if (algorithm1 == "Genetic Algorithm"){
+            this.bot2 = new BotGenetic();
         }
 
         if(algorithm2=="Local Search"){
             this.bot1 = new BotHillClimb();
+//            System.out.println("LOCAL");
         }
         else if (algorithm2 == "Minimax"){
             this.bot1 = new BotMinimax();
-        } else {
-//            this.bot1 = new Bot();
+//            System.out.println("MINIMAX");
+        } else if (algorithm2 == "Genetic Algorithm"){
+            this.bot1 = new BotGenetic();
         }
 
         this.playerXTurn = !isBotFirst;
@@ -127,7 +133,7 @@ public class OutputFrameController {
         if (this.isBotFirst) {
             this.moveBot1();
         } else if (!this.isBotFirst && !this.isVsHuman){
-            this.moveBot();
+            this.moveBot2();
         }
     }
 
@@ -226,7 +232,7 @@ public class OutputFrameController {
         // Button must be blank.
         else {
             if (this.playerXTurn) {
-                System.out.println("ROUND" + roundsLeft);
+//                System.out.println("ROUND" + roundsLeft);
                 // Changed background color to green to indicate next player's turn.
                 this.playerXBoxPane.setStyle("-fx-background-color: WHITE; -fx-border-color: #D3D3D3;");
                 this.playerOBoxPane.setStyle("-fx-background-color: #90EE90; -fx-border-color: #D3D3D3;");
@@ -248,13 +254,14 @@ public class OutputFrameController {
 
                 // Bot's turn
                 if (!isVsHuman) {
-                    try {
-                        java.util.concurrent.TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(event -> {
+                        this.moveBot1();
+                    });
+                    pause.play();
+                } else {
+                    this.moveBot1();
                 }
-                this.moveBot1();
             }
             else {
                 this.playerXBoxPane.setStyle("-fx-background-color: #90EE90; -fx-border-color: #D3D3D3;");
@@ -274,12 +281,14 @@ public class OutputFrameController {
                     this.endOfGame();       // Determine & announce the winner.
                 }
                 if (!this.isVsHuman && this.roundsLeft>0){
-                    try {
-                        java.util.concurrent.TimeUnit.SECONDS.sleep(2);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    this.moveBot();
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(event -> {
+                        this.moveBot2();
+                    });
+
+                    // Start the pause
+                    pause.play();
+//                    this.moveBot();
                 }
             }
         }
@@ -417,62 +426,66 @@ public class OutputFrameController {
         primaryStage.show();
     }
 
-    private void moveBot() {
-        for (int i = 0 ; i < 8 ; i++)
-        {
-            for (int j = 0 ; j < 8 ; j++)
-            {
-                if (buttons[i][j].getText().equals(""))
-                {
-                    System.out.print("_ ");
-                } else {
-                    System.out.print(buttons[i][j].getText() + " ");
-                }
-            }
-            System.out.println();
-        }
+    private void moveBot2() {
+//        for (int i = 0 ; i < 8 ; i++)
+//        {
+//            for (int j = 0 ; j < 8 ; j++)
+//            {
+//                if (buttons[i][j].getText().equals(""))
+//                {
+//                    System.out.print("_ ");
+//                } else {
+//                    System.out.print(buttons[i][j].getText() + " ");
+//                }
+//            }
+//            System.out.println();
+//        }
 //        int[] botMove = this.bot.move(buttons);
-        int[] botMove = this.bot1.move(buttons);
+        int[] botMove = this.bot2.move(buttons, 1);
         int i = botMove[0];
         int j = botMove[1];
 
         while (!this.buttons[i][j].getText().equals("")) {
-             new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
-             System.exit(1);
-             return;
+//            System.out.println("TEKS");
+//            System.out.println(buttons[i][j].getText());
+            new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
+            System.exit(1);
+            return;
         }
 
-        System.out.println("bot1" + i + ", " + j);
+//        System.out.println("bot1" + i + ", " + j);
         Platform.runLater(() -> {
             this.selectedCoordinates(i, j);
         });
     }
 
     private void moveBot1(){
-        for (int i = 0 ; i < 8 ; i++)
-        {
-            for (int j = 0 ; j < 8 ; j++)
-            {
-                if (buttons[i][j].getText().equals(""))
-                {
-                    System.out.print("_ ");
-                } else {
-                    System.out.print(buttons[i][j].getText() + " ");
-                }
-            }
-            System.out.println();
-        }
+//        for (int i = 0 ; i < 8 ; i++)
+//        {
+//            for (int j = 0 ; j < 8 ; j++)
+//            {
+//                if (buttons[i][j].getText().equals(""))
+//                {
+//                    System.out.print("_ ");
+//                } else {
+//                    System.out.print(buttons[i][j].getText() + " ");
+//                }
+//            }
+//            System.out.println();
+//        }
 //        int[] botMove = this.bot1.move(buttons);
-        int[] botMove = this.bot1.move(buttons);
+        int[] botMove = this.bot1.move(buttons, 2);
         int i = botMove[0];
         int j = botMove[1];
 
         while (!this.buttons[i][j].getText().equals("")) {
-             new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
-             System.exit(1);
-             return;
+//            System.out.println("TEKS");
+//            System.out.println(buttons[i][j].getText());
+            new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
+            System.exit(1);
+            return;
         }
-        System.out.println("bot2" + i + ", " + j);
+//        System.out.println("bot2" + i + ", " + j);
         Platform.runLater(() -> {
             this.selectedCoordinates(i, j);
         });

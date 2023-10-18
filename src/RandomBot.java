@@ -13,7 +13,7 @@ public class RandomBot extends Bot{
     }
 
     @Override
-    public int[] move(Button[][] buttons) {
+    public int[] move(Button[][] buttons, int pNumber) {
         return new int[0];
     }
 }

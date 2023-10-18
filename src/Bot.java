@@ -11,5 +11,5 @@ public abstract class Bot {
         // create random move
         return new int[]{(int) (Math.random() * 8), (int) (Math.random() * 8)};
     }
-    public abstract int[] move(Button[][] buttons);
+    public abstract int[] move(Button[][] buttons, int pNumber);
 }
