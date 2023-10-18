@@ -111,10 +111,6 @@ public class OutputFrameController {
         else if (algorithm1 == "Minimax"){
             this.bot2 = new BotMinimax();
 //            System.out.println("MINIMAX");
-        } else {
-//            this.bot = new Bot();
-            this.bot2 = new BotMinimax();
-//            System.out.println("MINIMAX");
         } else if (algorithm1 == "Genetic Algorithm"){
             this.bot2 = new BotGenetic();
         }
@@ -125,9 +121,6 @@ public class OutputFrameController {
         }
         else if (algorithm2 == "Minimax"){
             this.bot1 = new BotMinimax();
-//            System.out.println("MINIMAX");
-        } else {
-//            this.bot1 = new Bot();
 //            System.out.println("MINIMAX");
         } else if (algorithm2 == "Genetic Algorithm"){
             this.bot1 = new BotGenetic();
