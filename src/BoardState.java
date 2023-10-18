@@ -1,4 +1,5 @@
 import javafx.scene.control.Button;
+import javafx.util.Pair;
 
 public class BoardState {
     public char[][] Positions = {
@@ -70,6 +71,14 @@ public class BoardState {
         }
     }
 
+    public BoardState(BoardState src) {
+        for (int i = 0; i < src.Positions.length; i++) {
+            for (int j = 0; j < src.Positions[0].length; j++) {
+                this.Positions[i][j] = src.Positions[i][j];
+            }
+        }
+    }
+
     public boolean isFull() {
         for (char[] row :
                 Positions) {
@@ -81,5 +90,9 @@ public class BoardState {
             }
         }
         return true;
+    }
+
+    public boolean isValidMove(Pair<Integer, Integer> move) {
+        return (this.Positions[move.getKey()][move.getValue()] == '_');
     }
 }

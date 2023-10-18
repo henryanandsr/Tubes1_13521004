@@ -113,6 +113,10 @@ public class OutputFrameController {
 //            System.out.println("MINIMAX");
         } else {
 //            this.bot = new Bot();
+            this.bot2 = new BotMinimax();
+//            System.out.println("MINIMAX");
+        } else if (algorithm1 == "Genetic Algorithm"){
+            this.bot2 = new BotGenetic();
         }
 
         if(algorithm2=="Local Search"){
@@ -124,6 +128,9 @@ public class OutputFrameController {
 //            System.out.println("MINIMAX");
         } else {
 //            this.bot1 = new Bot();
+//            System.out.println("MINIMAX");
+        } else if (algorithm2 == "Genetic Algorithm"){
+            this.bot1 = new BotGenetic();
         }
 
         this.playerXTurn = !isBotFirst;
