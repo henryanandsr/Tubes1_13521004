@@ -86,8 +86,8 @@ public class OutputFrameController {
         }
         else if (algorithm == "Minimax"){
             this.bot1 = new BotMinimax();
-        } else {
-//            this.bot = new Bot();
+        } else if (algorithm == "Genetic Algorithm"){
+           this.bot1 = new BotGenetic();
         }
         this.playerXTurn = !isBotFirst;
         if (this.isBotFirst) {

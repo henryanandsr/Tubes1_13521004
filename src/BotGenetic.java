@@ -157,12 +157,14 @@ public class BotGenetic extends Bot{
      * calculate probability of the specimen's fitness
      */
     public void calculateProbs(){
-        int total = 0;
+        int total = 1;
         for (Specimen specimen : specimens) {
             total += specimen.getValue();
             if (specimen.getValue() == 0) {
                 specimen.setProb(25);
-                total += 25;
+            }
+            if (total == 0){
+                total = 25;
             }
             specimen.setProb((int) Math.ceil(specimen.getValue() / total));
         }
