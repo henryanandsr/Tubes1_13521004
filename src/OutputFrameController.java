@@ -213,7 +213,6 @@ public class OutputFrameController {
         this.playerXTurn = true;
         this.playerXScore = 4;
         this.playerOScore = 4;
-        System.out.println("INITTT");
     }
 
 
@@ -232,7 +231,6 @@ public class OutputFrameController {
         // Button must be blank.
         else {
             if (this.playerXTurn) {
-//                System.out.println("ROUND" + roundsLeft);
                 // Changed background color to green to indicate next player's turn.
                 this.playerXBoxPane.setStyle("-fx-background-color: WHITE; -fx-border-color: #D3D3D3;");
                 this.playerOBoxPane.setStyle("-fx-background-color: #90EE90; -fx-border-color: #D3D3D3;");

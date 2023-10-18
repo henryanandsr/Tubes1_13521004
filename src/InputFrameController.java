@@ -50,7 +50,7 @@ public class InputFrameController{
         this.numberOfRounds.setItems(numberOfRoundsDropdown);
         this.numberOfRounds.getSelectionModel().select(0);
         ObservableList<String> botAlgorithmDropdown = FXCollections.observableArrayList(
-                "", "Hill Climbing", "Minimax", "MinimaxOptimized");
+                "", "Hill Climbing", "Minimax", "Genetic");
         this.botAlgorithm.setItems(botAlgorithmDropdown);
         this.botAlgorithm.getSelectionModel().select(0);
     }
