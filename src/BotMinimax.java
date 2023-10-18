@@ -19,7 +19,6 @@ public class BotMinimax extends Bot{
     @Override
     public int[] move(Button[][] buttons, int pNumber) {
         this.playerNumber = pNumber;
-        Callable<int[]> minimaxTask = () -> {
             int c = 0;
             int max = Integer.MIN_VALUE;
             int mi = 0, mj = 0;
@@ -43,7 +42,8 @@ public class BotMinimax extends Bot{
                     }
                 }
             }
-            for (Pair<Integer, Integer> pair : uniquePairs) {
+        long startTime = System.currentTimeMillis();
+        for (Pair<Integer, Integer> pair : uniquePairs) {
                 int i = pair.getKey();
                 int j = pair.getValue();
                 if (buttons[i][j].getText().equals("")) {
@@ -60,19 +60,15 @@ public class BotMinimax extends Bot{
                         mi = i;
                         mj = j;
                     }
+                    long currentTime = System.currentTimeMillis();
+                    long elapsedTime = currentTime - startTime;
+                    if (elapsedTime >= TIMEOUT) {
+                        return getRandomMove(buttons);
+                    }
                 }
             }
             int[] ret = {mi, mj};
             return ret;
-        };
-        Future<int[]> future = executorService.submit(minimaxTask);
-        try {
-            return future.get(TIMEOUT, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            return getRandomMove(buttons);
-        } finally {
-            future.cancel(true);
-        }
     }
 
     public int minimax(BoardState position, int depth, int alpha, int beta, boolean maximizingPlayer, int count){

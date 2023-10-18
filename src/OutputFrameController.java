@@ -86,7 +86,7 @@ public class OutputFrameController {
         }
         else if (algorithm == "Minimax"){
             this.bot1 = new BotMinimax();
-        } else if (algorithm == "Genetic Algorithm"){
+        } else if (algorithm == "Genetic"){
            this.bot1 = new BotGenetic();
         }
         this.playerXTurn = !isBotFirst;
@@ -127,6 +127,11 @@ public class OutputFrameController {
         }
 
         this.playerXTurn = !isBotFirst;
+        if (this.isBotFirst) {
+            this.moveBot1();
+        } else if (!this.isBotFirst && !this.isVsHuman){
+            this.moveBot2();
+        }
     }
     public void start()
     {
@@ -247,18 +252,22 @@ public class OutputFrameController {
                 }
 
                 if (isBotFirst && this.roundsLeft == 0) {
+                    System.out.println("END");
                     this.endOfGame();
                 }
 
                 // Bot's turn
-                if (!isVsHuman) {
+                if (!isVsHuman && roundsLeft != 0) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(2));
                     pause.setOnFinished(event -> {
                         this.moveBot1();
                     });
                     pause.play();
                 } else {
-                    this.moveBot1();
+                    System.out.println("MOVE AGAIN");
+                    if (roundsLeft!=0){
+                        this.moveBot1();
+                    }
                 }
             }
             else {
@@ -276,6 +285,7 @@ public class OutputFrameController {
                 }
 
                 if (!isBotFirst && this.roundsLeft == 0) { // Game has terminated.
+                    System.out.println("END 2");
                     this.endOfGame();       // Determine & announce the winner.
                 }
                 if (!this.isVsHuman && this.roundsLeft>0){
@@ -444,8 +454,6 @@ public class OutputFrameController {
         int j = botMove[1];
 
         while (!this.buttons[i][j].getText().equals("")) {
-//            System.out.println("TEKS");
-//            System.out.println(buttons[i][j].getText());
             new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
             System.exit(1);
             return;
@@ -477,8 +485,6 @@ public class OutputFrameController {
         int j = botMove[1];
 
         while (!this.buttons[i][j].getText().equals("")) {
-//            System.out.println("TEKS");
-//            System.out.println(buttons[i][j].getText());
             new Alert(Alert.AlertType.ERROR, "Bot Invalid Coordinates. Exiting.").showAndWait();
             System.exit(1);
             return;
