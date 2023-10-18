@@ -1,6 +1,9 @@
 import javafx.scene.control.Button;
 import javafx.util.Pair;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
 public class BotMinimax extends Bot{
@@ -66,8 +69,6 @@ public class BotMinimax extends Bot{
         try {
             return future.get(TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            e.printStackTrace();
-            System.out.println("Timeout, get random move!");
             return getRandomMove(buttons);
         } finally {
             future.cancel(true);
@@ -121,13 +122,16 @@ public class BotMinimax extends Bot{
         }
     }
     private int[] getRandomMove(Button[][] buttons) {
-        for (int i = 0 ; i < 8 ; i++){
-            for (int j = 0 ; j < 8 ; j++){
+        List<int[]> eligibleMoves = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 if (buttons[i][j].getText().equals("")) {
-                    return new int[]{i, j};
+                    eligibleMoves.add(new int[]{i, j});
                 }
             }
         }
-        return null;
+        Random random = new Random();
+        int randomIndex = random.nextInt(eligibleMoves.size());
+        return eligibleMoves.get(randomIndex);
     }
 }
